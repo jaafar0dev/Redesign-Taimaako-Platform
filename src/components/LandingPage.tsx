@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { Home, Users, Shield, Clock, CheckCircle2 } from "lucide-react";
+import { Home, Users, Shield, Clock, CheckCircle2, Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Logo } from "./Logo";
 import type { UserType } from "../App";
@@ -17,10 +18,12 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <Logo className="h-10 w-auto object-contain" />
             </div>
-            <div className="flex gap-3">
+
+            {/* Desktop Navigation (HIDDEN on mobile, VISIBLE on PC) */}
+            <div className="hidden lg:flex items-center gap-3">
               <Button
                 variant="outline"
                 onClick={() => onSelectUserType("worker")}
@@ -30,7 +33,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
               <Button onClick={() => onSelectUserType("client")}>
                 Get Started
               </Button>
-              {/* Hidden Admin Access - Click logo 5 times */}
+              {/* Hidden Admin Access */}
               <button
                 onClick={() => onSelectUserType("admin")}
                 className="text-xs text-gray-400 hover:text-gray-600 px-2"
@@ -38,10 +41,51 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
                 Admin
               </button>
             </div>
+
+            {/* Mobile Navigation Menu (VISIBLE on mobile, HIDDEN on PC) */}
+            <div className="flex lg:hidden items-center">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="shrink-0">
+                    <Menu className="h-6 w-6 text-gray-900" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent
+                  side="right"
+                  className="w-[300px] flex flex-col pt-12"
+                >
+                  <div className="sr-only">Navigation Menu</div>
+
+                  {/* Menu Items inside the Hamburger */}
+                  <nav className="flex flex-col gap-2 mt-8">
+                    <button
+                      onClick={() => onSelectUserType("worker")}
+                      className="flex items-center w-full px-4 py-3 text-lg font-medium text-gray-700 rounded-md hover:bg-green-50 hover:text-green-600 transition-colors text-left"
+                    >
+                      Become a Worker
+                    </button>
+                    <button
+                      onClick={() => onSelectUserType("client")}
+                      className="flex items-center w-full px-4 py-3 text-lg font-medium text-gray-700 rounded-md hover:bg-green-50 hover:text-green-600 transition-colors text-left"
+                    >
+                      Get Started
+                    </button>
+                  </nav>
+
+                  <div className="mt-auto pb-6 px-4">
+                    <button
+                      onClick={() => onSelectUserType("admin")}
+                      className="w-full text-left text-sm text-gray-400 hover:text-gray-600 py-2"
+                    >
+                      Admin Access
+                    </button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
-
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -58,7 +102,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="text-lg px-8 py-6"
+                className="text-lg px-8 py-6 w-full sm:w-auto"
                 onClick={() => onSelectUserType("client")}
               >
                 Book a Service
@@ -66,7 +110,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-6"
+                className="text-lg px-8 py-6 w-full sm:w-auto"
                 onClick={() => onSelectUserType("worker")}
               >
                 Join as Worker
@@ -81,7 +125,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg max-w-xs">
+            <div className="absolute -bottom-6 -right-6 sm:right-auto sm:-left-6 bg-white p-6 rounded-xl shadow-lg max-w-[280px] sm:max-w-xs z-10">
               <div className="flex items-start gap-3">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <CheckCircle2 className="w-6 h-6 text-green-600" />
@@ -236,7 +280,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
             <Button
               size="lg"
               variant="secondary"
-              className="text-lg px-8 py-6"
+              className="text-lg px-8 py-6 w-full sm:w-auto"
               onClick={() => onSelectUserType("client")}
             >
               Book a Service
@@ -244,7 +288,7 @@ export function LandingPage({ onSelectUserType }: LandingPageProps) {
             <Button
               size="lg"
               variant="outline"
-              className="text-lg px-8 py-6 bg-transparent text-white border-white hover:bg-white/10"
+              className="text-lg px-8 py-6 bg-transparent text-white border-white hover:bg-white/10 w-full sm:w-auto"
               onClick={() => onSelectUserType("worker")}
             >
               Become a Worker
