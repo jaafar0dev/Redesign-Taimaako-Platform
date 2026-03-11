@@ -40,6 +40,7 @@ export function ClientReferral() {
       date: 'Jan 30, 2026'
     }
   ]);
+  //
 
   const totalEarned = referrals.reduce((sum, ref) => sum + ref.earnedAmount, 0);
   const completedReferrals = referrals.filter(r => r.status === 'completed').length;
